@@ -16,7 +16,7 @@
       </div>
 
       <v-spacer></v-spacer>
-      <v-btn dark depressed color="#E7596F" class="text-none mr-5">
+      <v-btn dark depressed color="#E7596F" class="text-none mr-5" to="/login">
         <span class="mr-2">
           <v-icon class="mr-2">mdi-plus</v-icon>Create New Post
         </span>
@@ -41,6 +41,7 @@
 
     <v-content>
       <ProfilePage />
+      
       <!-- <Register />
       <Login /> -->
     </v-content>
