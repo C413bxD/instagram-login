@@ -8,22 +8,23 @@ class AuthServices {
     return secureStorage.getItem("token") !== null;
   }
 
-  static async login(username = "", password = "") {
-    var res = await http.post("oauth/token", {
-      username,
+  static async login(email = "", password = "") {
+    let user = {
+      email,
       password,
       grant_type: process.env.VUE_APP_GRANT_TYPE,
       client_id: process.env.VUE_APP_CLIENT_ID,
       client_secret: process.env.VUE_APP_CLIENT_SECRET,
       scope: process.env.VUE_APP_SCOPE
-    });
+    }
+    var res = await http.post("login", {user});
     AuthServices.saveAccessToken(res.data);
   }
 
   static saveAccessToken(tokenResponse) {
     secureStorage.setItem(
       "token",
-      `${tokenResponse.token_type} ${tokenResponse.access_token}`
+      `${tokenResponse.type} ${tokenResponse.token}`
     );
     http.defaults.headers["Authorization"] = secureStorage.getItem("token");
   }

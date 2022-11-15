@@ -1,12 +1,15 @@
 # Instagram Clone UI
 
 ## Caleb Importante
-generar siguiente comando por que se instalo Vue-router, Axios, core-js, crypto-js, secure-web-storage.
+Primero generar siguiente comando por que se instalo Vue-router, Axios, core-js, crypto-js, secure-web-storage.
 
 ``` sh
 yarn install
 
 ```
+
+Segundo crear el archivo .env usando el env.example solo eliminando la extencion `.example`
+
 ## Description
 I thought the instagram profile page lacked a bit of finness so I thought I would give it a more modern look and bring it up to the times. So I found this design on Dribble and re-created with Vue and Vuetify. 
 

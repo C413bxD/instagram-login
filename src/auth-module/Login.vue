@@ -16,7 +16,7 @@
                 </div>
                 <v-list-item three-line>
                   <v-list-item-content>
-                    <form>
+                    <form @submit.prevent="login">
                       <v-text-field
                         placeholder="Telefono, usuario o correo electrónico"
                         filled
@@ -24,7 +24,8 @@
                         outlined
                         clearable
                         color="gray"
-                        type="text"
+                        type="email"
+                        v-model="email"
                         hide-details="auto"
                         class="custom-size mb-1"
                       >
@@ -38,6 +39,7 @@
                         clearable
                         color="gray"
                         type="password"
+                        v-model="password"
                         hide-details="auto"
                         class="custom-size mb-3"
                       ></v-text-field>
@@ -49,6 +51,7 @@
                           rounded
                           color="info"
                           class="text-capitalize mt-2 "
+                          type="submit"
                         >
                           Entrar
                         </v-btn>
@@ -125,14 +128,42 @@
 </template>
 
 <script>
+import { AuthServices } from "./AuthServices.js";
+// import redirectAction from "@/auth-module/redirectAction.js";
 export default {
   name: "Login",
 
-  data: () => ({}),
+  data: () => ({
+    email:'',
+    password:''
+  }),
 
   computed: {},
 
-  methods: {},
+  methods: {
+    login() {
+      this.sending = true;
+      this.errorMessage = "";
+      AuthServices.login(this.email, this.password)
+        .then(
+          async () => {
+            this.registrar()
+          },
+          (error) => {
+            this.errorMessage = error.response.data.message;
+          }
+        )
+        .then(() => {
+          //this.sending = false;
+        });
+    },
+    async registrar() {
+      await this.$store.dispatch("setup");
+      //this.redireccinando = true;
+      this.$router.push('/');
+    }
+
+  },
 };
 </script>
 
