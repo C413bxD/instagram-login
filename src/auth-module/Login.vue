@@ -134,8 +134,8 @@ export default {
   name: "Login",
 
   data: () => ({
-    email:'',
-    password:''
+    email: "",
+    password: "",
   }),
 
   computed: {},
@@ -147,7 +147,7 @@ export default {
       AuthServices.login(this.email, this.password)
         .then(
           async () => {
-            this.registrar()
+            this.registrar();
           },
           (error) => {
             this.errorMessage = error.response.data.message;
@@ -160,9 +160,8 @@ export default {
     async registrar() {
       await this.$store.dispatch("setup");
       //this.redireccinando = true;
-      this.$router.push('/');
-    }
-
+      this.$router.push("/");
+    },
   },
 };
 </script>

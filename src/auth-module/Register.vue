@@ -36,7 +36,7 @@
                       <hr />
                     </v-col>
                   </v-row>
-                  <form>
+                  <form @submit.prevent="register">
                     <v-text-field
                       placeholder="Numero de movil o correo electronico"
                       filled
@@ -45,6 +45,7 @@
                       clearable
                       color="gray"
                       type="email"
+                      v-model="email"
                       hide-details="auto"
                       class="custom-size mb-1"
                     >
@@ -58,6 +59,7 @@
                       clearable
                       color="gray"
                       type="text"
+                      v-model="fullname"
                       hide-details="auto"
                       class="custom-size mb-1"
                     ></v-text-field>
@@ -70,6 +72,7 @@
                       clearable
                       color="gray"
                       type="text"
+                      v-model="name"
                       hide-details="auto"
                       class="custom-size mb-1"
                     ></v-text-field>
@@ -82,6 +85,7 @@
                       clearable
                       color="gray"
                       type="password"
+                      v-model="password"
                       hide-details="auto"
                       class="custom-size mb-3"
                     ></v-text-field>
@@ -103,6 +107,7 @@
                         rounded
                         color="info"
                         class="text-capitalize mt-2 "
+                        type="submit"
                       >
                         Registrarse
                       </v-btn>
@@ -122,26 +127,26 @@
             </v-list-item>
           </v-card>
           <p class="mt-5 black--text text-center">
-                Descarga la aplicación.
-              </p>
-              <v-card class="d-flex justify-center mb-6" flat>
-                <v-card elevation="0">
-                  <v-img
-                    src="../assets/google.png"
-                    height="40"
-                    width="134"
-                    class="ma-1"
-                  ></v-img>
-                </v-card>
-                <v-card elevation="0">
-                  <v-img
-                    src="../assets/microsoft.png"
-                    height="40"
-                    width="110.766"
-                    class="ma-1"
-                  ></v-img>
-                </v-card>
-              </v-card>
+            Descarga la aplicación.
+          </p>
+          <v-card class="d-flex justify-center mb-6" flat>
+            <v-card elevation="0">
+              <v-img
+                src="../assets/google.png"
+                height="40"
+                width="134"
+                class="ma-1"
+              ></v-img>
+            </v-card>
+            <v-card elevation="0">
+              <v-img
+                src="../assets/microsoft.png"
+                height="40"
+                width="110.766"
+                class="ma-1"
+              ></v-img>
+            </v-card>
+          </v-card>
         </div>
       </v-flex>
     </v-layout>
@@ -149,13 +154,42 @@
 </template>
 
 <script>
+import { AuthServices } from "./AuthServices.js";
 export default {
-  name:"register",
-  data: () => ({}),
+  name: "register",
+  data: () => ({
+    email: "",
+    fullname: "",
+    name: "",
+    password: "",
+    errorMessage: "",
+  }),
 
   computed: {},
 
-  methods: {},
+  methods: {
+    register() {
+      //this.sending = true;
+      this.errorMessage = "";
+      AuthServices.register(this.email, this.password, this.fullname, this.name)
+        .then(
+          async () => {
+            this.registrar();
+          },
+          (error) => {
+            this.errorMessage = error.response.data.message;
+          }
+        )
+        .then(() => {
+          //this.sending = false;
+        });
+    },
+    async registrar() {
+      await this.$store.dispatch("setup");
+      //this.redireccinando = true;
+      this.$router.push("/");
+    },
+  },
 };
 </script>
 
