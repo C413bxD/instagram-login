@@ -4,6 +4,7 @@ import { secureStorage } from "./secureStorage.js";
 
 const axiosRequests = axios.create({
   headers: {
+    'Content-Type': 'multipart/form-data',
     "Access-Control-Allow-Origin": "*",
     Authorization: secureStorage.getItem("token")
   }
@@ -12,6 +13,7 @@ const axiosRequests = axios.create({
 const http = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
   headers: {
+    'Content-Type': 'multipart/form-data',
     "Access-Control-Allow-Origin": "*",
     Authorization: secureStorage.getItem("token")
   }

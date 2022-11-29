@@ -24,9 +24,9 @@ function makeSecureStorage(storage = new Storage()) {
 
 var secureStorage = makeSecureStorage(localStorage);
 
-if (process.env.NODE_ENV == "development") {
-  secureStorage = localStorage;
-}
+// if (process.env.NODE_ENV == "development") {
+//   secureStorage = localStorage;
+// }
 
 export { secureStorage };
 export default secureStorage;

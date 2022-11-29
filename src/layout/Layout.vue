@@ -16,7 +16,7 @@
       </div>
 
       <v-spacer></v-spacer>
-      <v-btn dark depressed color="#E7596F" class="text-none mr-5" to="/login">
+      <v-btn dark depressed color="#E7596F" class="text-none mr-5" @click="agregar()">
         <span class="mr-2">
           <v-icon class="mr-2">mdi-plus</v-icon>Create New Post
         </span>
@@ -45,15 +45,69 @@
       <!-- <Register />
       <Login /> -->
     </v-content>
+    <v-dialog v-model="dialog">
+      <v-card>
+        <v-card-title class="text-h5 grey lighten-2 justify-center" > Agregar Pots</v-card-title>
+
+        <v-card-text class="mt-2">
+          <v-form>
+            <!--input type="file" @change="uploadFile()" ref="elFile"/-->
+            <v-file-input
+              label="File input"
+              outlined
+              dense
+              v-model="FILE"
+              ref="elFile"
+            >
+            </v-file-input>
+            <v-img :src="url"
+            max-width="500"
+            max-height="300" />
+
+            <v-text-field
+              name="scp-name"
+              label="Nombre de la publicación"
+              v-model="name"
+              type="text"
+            ></v-text-field>
+            <v-text-field
+              name="scp-item"
+              label="item"
+              v-model="item"
+              type="text"
+            ></v-text-field>
+            <v-textarea
+              name="input-7-1"
+              label="Descripción"
+              auto-grow
+              v-model="descrition"
+            ></v-textarea>
+            <v-select
+              v-model="category_id"
+              :items="categorias"
+              label="Categoria"
+              required
+            ></v-select>
+          </v-form>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn @click="CrearPost()" color="primary">Crear Post</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-app>
+  
 </template>
 
 <script>
 import ProfilePage from "@/pages/ProfilePage";
 import MainNav from "@/components/MainNav";
 import ProfileRightNav from "@/components/ProfileRightNav";
-// import Register from "@/components/Register";
-// import Login from "@/components/Login.vue";
+import ApiService from "@/ApiService.js";
 
 // import HelloWorld from "@components/HelloWorld";
 
@@ -63,21 +117,73 @@ export default {
   components: {
     ProfilePage,
     MainNav,
-    ProfileRightNav,
-    // Register,
-    // Login,
+    ProfileRightNav
   },
 
   data: () => ({
     drawer: true,
     group: null,
+    dialog: false,
+    categorias: [],
+
+
+    id: "",
+    FILE: null,
+    name: "",
+    item: "",
+    descrition: "",
+    category_id: "",
     //
   }),
 
+  mounted() {
+    this.getCategorias();
+  },
+  computed:{
+    url() {
+      if (!this.FILE) return;
+      return URL.createObjectURL(this.FILE);
+    }
+  },
   watch: {
     group() {
       this.drawer = false;
-    },
+    }
   },
+  methods:{
+
+    agregar(){
+      this.dialog = true;
+    },
+    async getCategorias(){
+      var result = await ApiService.getCategorias();
+      this.categorias = result.map((option) => ({
+        value: option.id,
+        text: option.name,
+      }));
+    },
+    async CrearPost(){
+      const formData = new FormData();
+      formData.append('avatar', this.FILE)
+      formData.append("name", this.name)
+      formData.append("item", this.item)
+      formData.append("descrition", this.descrition)
+      formData.append("category_id", this.category_id)
+      await ApiService.CreatePost(formData)
+      .then((response) =>{
+        console.log(response)
+        this.dialog = false;
+
+        this.FILE= null;
+        this.name= "";
+        this.item = "";
+        this.descrition= "";
+        this.category_id= null;
+      }).catch((error)=>{
+        console.log(error)
+      })
+
+    }
+  }
 };
 </script>
