@@ -1,19 +1,15 @@
 <template>
   <div>
-    <v-app class="col" id="inspire">
+    <v-app id="inspire">
       <v-content>
         <v-container fluid fill-height>
           <v-layout align-center justify-center>
             <v-flex xs12 sm8 md4>
-              <div>
+            <v-row>
+              <v-col>
                 <transition></transition>
-  
-                
-  
-              </div>
-            </v-flex>
-            <v-flex xs12 sm8 md4>
-              <div>
+              </v-col>
+              <v-col>
                 <v-card class="mx-auto elevation-12" max-width="344" outlined>
                   <div>
                     <v-img
@@ -128,7 +124,8 @@
                     ></v-img>
                   </v-card>
                 </v-card>
-              </div>
+              </v-col>
+            </v-row>
             </v-flex>
           </v-layout>
         </v-container>
