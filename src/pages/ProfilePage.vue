@@ -1,7 +1,7 @@
 <template>
   <v-container class="pa-10">
     <stories-section />
-    <feed-section />
+    <feed-section ref="feedSection"/>
   </v-container>
 </template>
 
@@ -12,6 +12,11 @@ export default {
   components: {
     StoriesSection,
     FeedSection
+  },
+  methods:{
+    GetPosts(){
+      this.$refs.feedSection.getPosts();
+    }
   }
 };
 </script>

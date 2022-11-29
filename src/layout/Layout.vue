@@ -16,7 +16,13 @@
       </div>
 
       <v-spacer></v-spacer>
-      <v-btn dark depressed color="#E7596F" class="text-none mr-5" @click="agregar()">
+      <v-btn
+        dark
+        depressed
+        color="#E7596F"
+        class="text-none mr-5"
+        @click="agregar()"
+      >
         <span class="mr-2">
           <v-icon class="mr-2">mdi-plus</v-icon>Create New Post
         </span>
@@ -37,17 +43,16 @@
       <v-icon>mdi-menu-down</v-icon>
     </v-app-bar>
     <main-nav />
-    <profile-right-nav />
+    <profile-right-nav  />
 
     <v-content>
-      <ProfilePage />
-      
-      <!-- <Register />
-      <Login /> -->
+      <ProfilePage  ref="Posts"/>
     </v-content>
     <v-dialog v-model="dialog">
       <v-card>
-        <v-card-title class="text-h5 grey lighten-2 justify-center" > Agregar Pots</v-card-title>
+        <v-card-title class="text-h5 grey lighten-2 justify-center">
+          Agregar Pots</v-card-title
+        >
 
         <v-card-text class="mt-2">
           <v-form>
@@ -60,9 +65,7 @@
               ref="elFile"
             >
             </v-file-input>
-            <v-img :src="url"
-            max-width="500"
-            max-height="300" />
+            <v-img :src="url" max-width="500" max-height="300" />
 
             <v-text-field
               name="scp-name"
@@ -100,7 +103,6 @@
       </v-card>
     </v-dialog>
   </v-app>
-  
 </template>
 
 <script>
@@ -117,7 +119,7 @@ export default {
   components: {
     ProfilePage,
     MainNav,
-    ProfileRightNav
+    ProfileRightNav,
   },
 
   data: () => ({
@@ -125,7 +127,6 @@ export default {
     group: null,
     dialog: false,
     categorias: [],
-
 
     id: "",
     FILE: null,
@@ -139,51 +140,53 @@ export default {
   mounted() {
     this.getCategorias();
   },
-  computed:{
+  computed: {
     url() {
       if (!this.FILE) return;
       return URL.createObjectURL(this.FILE);
-    }
+    },
   },
   watch: {
     group() {
       this.drawer = false;
-    }
+    },
   },
-  methods:{
-
-    agregar(){
+  methods: {
+    agregar() {
       this.dialog = true;
     },
-    async getCategorias(){
+    async getCategorias() {
       var result = await ApiService.getCategorias();
       this.categorias = result.map((option) => ({
         value: option.id,
         text: option.name,
       }));
     },
-    async CrearPost(){
+    async CrearPost() {
       const formData = new FormData();
-      formData.append('avatar', this.FILE)
-      formData.append("name", this.name)
-      formData.append("item", this.item)
-      formData.append("descrition", this.descrition)
-      formData.append("category_id", this.category_id)
+      formData.append("avatar", this.FILE);
+      formData.append("name", this.name);
+      formData.append("item", this.item);
+      formData.append("descrition", this.descrition);
+      formData.append("category_id", this.category_id);
       await ApiService.CreatePost(formData)
-      .then((response) =>{
-        console.log(response)
-        this.dialog = false;
+        .then((response) => {
+          console.log(response);
+          this.dialog = false;
 
-        this.FILE= null;
-        this.name= "";
-        this.item = "";
-        this.descrition= "";
-        this.category_id= null;
-      }).catch((error)=>{
-        console.log(error)
-      })
+          this.FILE = null;
+          this.name = "";
+          this.item = "";
+          this.descrition = "";
+          this.category_id = null;
 
-    }
-  }
+          
+          this.$refs.Posts.GetPosts();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
 };
 </script>

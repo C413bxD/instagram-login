@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import ApiService from "@/ApiService.js";
 export default {
   data() {
     return {
@@ -36,6 +37,17 @@ export default {
         "https://images.unsplash.com/photo-1515966097209-ec48f3216288?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
       ]
     };
+  },
+  mounted(){
+    this.getPosts();
+  },
+  methods:{
+    async getPosts(){
+      var result = await ApiService.GetPosts();
+      result.map((img) =>{
+        this.feedImages.push('https://project-scp-adonis.herokuapp.com/uploads/'+img.url_img)
+      })
+    }
   }
 };
 </script>

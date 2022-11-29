@@ -10,6 +10,9 @@ class ApiService {
   static async CreatePost(params){
     return (await http.post("scp-items", params )).data; 
   }
+  static async GetPosts(){
+    return (await http.get("scp-items")).data;
+  }
 }
 
 export default ApiService;
