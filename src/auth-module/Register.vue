@@ -1,8 +1,13 @@
 <template>
   <v-container fluid fill-height>
     <v-layout align-center justify-center>
-      <v-flex xs12 sm8 md4>
-        <div>
+      <v-flex xs12 sm12 md6>
+        <v-row>
+          <v-col class="transition">
+            <transition ></transition>
+          </v-col>
+          <v-col>
+          <div>
           <v-row>
             <v-card class="mx-auto" max-width="344" outlined>
               <div>
@@ -108,6 +113,7 @@
                         color="info"
                         class="text-capitalize mt-2 "
                         type="submit"
+
                       >
                         Registrarse
                       </v-btn>
@@ -121,7 +127,7 @@
             <v-list-item three-line>
               <v-list-item-content>
                 <div class="a text-center">
-                  ¿Tienes una cuenta? <a href="#" class="ml-1">Entrar</a>
+                  ¿Tienes una cuenta? <router-link to="login" class="ml-1">Entrar</router-link>
                 </div>
               </v-list-item-content>
             </v-list-item>
@@ -148,6 +154,9 @@
             </v-card>
           </v-card>
         </div>
+      </v-col>
+        </v-row>
+        
       </v-flex>
     </v-layout>
   </v-container>
@@ -155,8 +164,12 @@
 
 <script>
 import { AuthServices } from "./AuthServices.js";
+import Transition from "@/components/Transition.vue"
 export default {
   name: "register",
+  components:{
+    Transition
+  },
   data: () => ({
     email: "",
     fullname: "",
@@ -208,5 +221,8 @@ h2 {
 }
 .custom-size input::placeholder {
   font-size: 14px;
+}
+.transition{
+  margin: 10% 0;
 }
 </style>

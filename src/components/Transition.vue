@@ -15,11 +15,6 @@
         width="283px"
         src="../assets/marco.png"
       ></v-img>
-      <!-- <v-img
-        class="screen1"
-        width="250px"
-        src="../assets/screenshot1.png"
-      ></v-img> -->
       <div class="cuadrado">
       </div>
     </div>
@@ -36,22 +31,9 @@ export default {
       ],
     count: 0
   }),
-  mounted() {
-    this.transition();
-  },
   computed: {},
 
   methods: {
-    transition(){
-      setTimeout(() => {
-        while(this.count<3){
-          console.log(this.colors[this.count])
-          this.count++
-        }
-       
-        
-    }, 2000);
-    }
   },
 };
 </script>

@@ -33,14 +33,27 @@
       <v-btn icon class="mr-5">
         <v-icon>mdi-heart-outline</v-icon>
       </v-btn>
-      <v-avatar size="30">
-        <img
-          lazy-src="https://images.unsplash.com/photo-1549068106-b024baf5062d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-          src="https://images.unsplash.com/photo-1549068106-b024baf5062d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-          alt="John"
-        />
+      <div class="avatar_i">
+        <v-avatar size="30" >
+        <v-menu offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <img
+            lazy-src="https://images.unsplash.com/photo-1549068106-b024baf5062d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+            src="https://images.unsplash.com/photo-1549068106-b024baf5062d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+            alt="John"
+            v-bind="attrs"
+            v-on="on"
+            />
+           
+          </template>
+          <v-btn @click="logout()">
+            Cerrar Sesion
+          </v-btn>
+        </v-menu>
       </v-avatar>
-      <v-icon>mdi-menu-down</v-icon>
+      </div>
+      
+      <v-icon class="icono">mdi-menu-down</v-icon>
     </v-app-bar>
     <main-nav />
     <profile-right-nav  />
@@ -110,6 +123,7 @@ import ProfilePage from "@/pages/ProfilePage";
 import MainNav from "@/components/MainNav";
 import ProfileRightNav from "@/components/ProfileRightNav";
 import ApiService from "@/ApiService.js";
+import AuthServices from "../auth-module/AuthServices";
 
 // import HelloWorld from "@components/HelloWorld";
 
@@ -187,6 +201,23 @@ export default {
           console.log(error);
         });
     },
+    async logout(){
+      await AuthServices.logout();
+      this.$router.push("/login")
+      
+    }
   },
 };
 </script>
+<style>
+  .avatar_i:visited{
+    cursor: pointer;
+    border: 2px solid black;
+    padding: 2px 0;
+  }
+  .avatar_i:hover{
+    cursor: pointer;
+    border: 2px solid black;
+    padding: 2px 0;
+  }
+</style>

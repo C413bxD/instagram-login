@@ -4,7 +4,7 @@
       <v-content>
         <v-container fluid fill-height>
           <v-layout align-center justify-center>
-            <v-flex xs12 sm8 md4>
+            <v-flex xs12 sm12 md6>
             <v-row>
               <v-col>
                 <transition></transition>
@@ -97,7 +97,7 @@
                     <v-list-item-content>
                       <div class="a text-center">
                         ¿No tienes una cuenta?
-                        <a href="#" class="ml-1">Regístrate</a>
+                        <router-link to="/register" class="ml-1">Regístrate</router-link>
                       </div>
                     </v-list-item-content>
                   </v-list-item>
