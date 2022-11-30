@@ -249,9 +249,5 @@ export default {
   border-radius: 50%;
 }
 
-.avatar_i:link{
-  border: 2px solid black;
-  background-color: transparent;
-  border-radius: 50%;
-}
+
 </style>
