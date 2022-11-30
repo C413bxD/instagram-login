@@ -1,6 +1,6 @@
 import http from "../utils/http.js";
 import { secureStorage } from "../utils/secureStorage.js";
-import { authStore } from "./authStore.js";
+
 
 class AuthServices {
   constructor() {}
@@ -42,8 +42,7 @@ class AuthServices {
       "token",
       `${tokenResponse.type} ${tokenResponse.token}`
     );
-    http.defaults.headers["Authorization"] = secureStorage.getItem("token");
-    authStore.state  
+    http.defaults.headers["Authorization"] = secureStorage.getItem("token"); 
   }
 
   static removeToken() {
