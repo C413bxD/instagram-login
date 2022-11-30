@@ -19,8 +19,8 @@ const routes = [
         component: () => import("@/auth-module/Login.vue"),
         meta: { requiresAuth: false },
         beforeEnter: (to, from, next) => {
-            console.log(store.state.user)
-            if(store.state.user) {
+            console.log(store.state.logged)
+            if(store.state.logged) {
               next({ path: "/" });
             } else {
               next();
@@ -32,8 +32,8 @@ const routes = [
         component: () => import("@/auth-module/Register.vue"),
         meta: { requiresAuth: false },
         beforeEnter: (to, from, next) => {
-            console.log(store.state.user)
-            if(store.state.user) {
+            console.log(store.state.logged)
+            if(store.state.logged) {
               next({ path: "/" });
             } else {
               next();

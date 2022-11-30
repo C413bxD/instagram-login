@@ -34,33 +34,57 @@
         <v-icon>mdi-heart-outline</v-icon>
       </v-btn>
       <div class="avatar_i">
-        <v-avatar size="30" >
-        <v-menu offset-y>
-          <template v-slot:activator="{ on, attrs }">
-            <img
-            lazy-src="https://images.unsplash.com/photo-1549068106-b024baf5062d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-            src="https://images.unsplash.com/photo-1549068106-b024baf5062d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-            alt="John"
-            v-bind="attrs"
-            v-on="on"
-            />
-           
-          </template>
-          <v-btn @click="logout()">
-            Cerrar Sesion
-          </v-btn>
-        </v-menu>
-      </v-avatar>
+        <v-avatar size="30">
+          <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <img
+                lazy-src="https://images.unsplash.com/photo-1549068106-b024baf5062d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                src="https://images.unsplash.com/photo-1549068106-b024baf5062d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                alt="John"
+                v-bind="attrs"
+                v-on="on"
+              />
+            </template>
+            <v-list nav dense>
+              <v-list-item-group v-model="selectedItem" color="primary">
+                <div v-for="(item, index) in items" :key="index">
+                  <template v-if="index == 5">
+                    <hr />
+                  </template>
+                  <v-list-item>
+                    <template v-if="index != 5">
+                      <v-list-item-icon>
+                        <v-icon v-text="item.icon"></v-icon>
+                      </v-list-item-icon>
+                    </template>
+                    <v-list-item-title>
+                      <template v-if="index == 5">
+                        <div @click="logout()">
+                          {{ item.text }}
+                        </div>
+                      </template>
+                      <template v-else>
+                        {{ item.text }}
+                      </template>
+                    </v-list-item-title>
+                  </v-list-item>
+                </div>
+              </v-list-item-group>
+            </v-list>
+            <!-- <v-btn @click="logout()">
+              Cerrar Sesion
+            </v-btn> -->
+          </v-menu>
+        </v-avatar>
       </div>
-      
-      <v-icon class="icono">mdi-menu-down</v-icon>
     </v-app-bar>
     <main-nav />
-    <profile-right-nav  />
+    <profile-right-nav />
 
     <v-content>
-      <ProfilePage  ref="Posts"/>
+      <ProfilePage ref="Posts" />
     </v-content>
+
     <v-dialog v-model="dialog">
       <v-card>
         <v-card-title class="text-h5 grey lighten-2 justify-center">
@@ -137,6 +161,15 @@ export default {
   },
 
   data: () => ({
+    selectedItem: null,
+    items: [
+      { text: "Perfil", icon: "mdi-account-box-outline" },
+      { text: "Guardados", icon: "mdi-bookmark" },
+      { text: "Configuración", icon: "mdi-cog-outline" },
+      { text: "Informar de un problema", icon: "mdi-cellphone-information"},
+      { text: "Cambiar de cuenta", icon: "mdi-swap-horizontal-circle-outline" },
+      { text: "Cerrar sesión", icon: "" },
+    ],
     drawer: true,
     group: null,
     dialog: false,
@@ -194,30 +227,29 @@ export default {
           this.descrition = "";
           this.category_id = null;
 
-          
           this.$refs.Posts.GetPosts();
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    async logout(){
+    async logout() {
       await AuthServices.logout();
-      this.$router.push("/login")
-      
-    }
+      await this.$store.dispatch("logout");
+      this.$router.push("/login");
+    },
   },
 };
 </script>
 <style>
-  .avatar_i:visited{
-    cursor: pointer;
-    border: 2px solid black;
-    padding: 2px 0;
-  }
-  .avatar_i:hover{
-    cursor: pointer;
-    border: 2px solid black;
-    padding: 2px 0;
-  }
+.avatar_i:visited {
+  cursor: pointer;
+  border: 2px solid black;
+  padding: 2px 0;
+}
+.avatar_i:hover {
+  cursor: pointer;
+  border: 2px solid black;
+  padding: 2px 0;
+}
 </style>
