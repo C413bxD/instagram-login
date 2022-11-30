@@ -33,8 +33,9 @@
       <v-btn icon class="mr-5">
         <v-icon>mdi-heart-outline</v-icon>
       </v-btn>
-      <div class="avatar_i">
-        <v-avatar size="30">
+      <div>
+
+        <v-avatar size="32">
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
               <img
@@ -43,6 +44,8 @@
                 alt="John"
                 v-bind="attrs"
                 v-on="on"
+                @click="(isActive = !isActive)"
+                v-bind:class="{  avatar_i: isActive }"
               />
             </template>
             <v-list nav dense>
@@ -71,16 +74,12 @@
                 </div>
               </v-list-item-group>
             </v-list>
-            <!-- <v-btn @click="logout()">
-              Cerrar Sesion
-            </v-btn> -->
           </v-menu>
         </v-avatar>
       </div>
     </v-app-bar>
     <main-nav />
     <profile-right-nav />
-
     <v-content>
       <ProfilePage ref="Posts" />
     </v-content>
@@ -161,6 +160,7 @@ export default {
   },
 
   data: () => ({
+    isActive:false,
     selectedItem: null,
     items: [
       { text: "Perfil", icon: "mdi-account-box-outline" },
@@ -242,14 +242,16 @@ export default {
 };
 </script>
 <style>
-.avatar_i:visited {
-  cursor: pointer;
+
+.avatar_i {
   border: 2px solid black;
-  padding: 2px 0;
+  background-color: transparent;
+  border-radius: 50%;
 }
-.avatar_i:hover {
-  cursor: pointer;
+
+.avatar_i:link{
   border: 2px solid black;
-  padding: 2px 0;
+  background-color: transparent;
+  border-radius: 50%;
 }
 </style>
