@@ -1,11 +1,10 @@
 # Instagram Clone UI
 
-## Caleb Importante
+## Importante
 Primero generar siguiente comando por que se instalo Vue-router, Axios, core-js, crypto-js, secure-web-storage.
 
 ``` sh
 yarn install
-
 ```
 
 Segundo crear el archivo .env usando el env.example solo eliminando la extencion `.example`
